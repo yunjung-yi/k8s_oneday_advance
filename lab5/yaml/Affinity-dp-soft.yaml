@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-affinity-soft
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: soft
+  template:
+    metadata:
+      name: soft
+      labels:
+        app: soft
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 70
+            preference:
+              matchExpressions:
+              - key: color
+                operator: In
+                values:
+                - red
+          - weight: 30  
+            preference:
+              matchExpressions:
+              - key: color
+                operator: In
+                values:
+                - blue

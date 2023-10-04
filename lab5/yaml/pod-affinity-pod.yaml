@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity-pod
+  labels: 
+    app: podaff
+spec:
+  containers:
+  - name: affinity-pod
+    image: nginx

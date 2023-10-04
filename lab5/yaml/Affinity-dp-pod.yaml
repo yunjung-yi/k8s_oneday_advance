@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-affinity-dp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: podaff
+  template:
+    metadata:
+      labels:
+        app: podaff
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - podaff
+            topologyKey: color
+      containers:
+      - name: nginx
+        image: nginx
