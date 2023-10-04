@@ -5,7 +5,7 @@
 
 1. 실습 디렉토리 이동
 ```
-cd ~/k8s_course/lab4/yaml
+cd ~/k8s_oneday_advance/lab2/yaml
 ```
 
 2. Daemonset 조회

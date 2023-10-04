@@ -5,7 +5,7 @@
 
 1. 실습 디렉토리 이동
 ```
-cd ~/k8s_course/lab5/yaml
+cd ~/k8s_oneday_advance/lab4/yaml
 ```
 
 2. yaml 확인

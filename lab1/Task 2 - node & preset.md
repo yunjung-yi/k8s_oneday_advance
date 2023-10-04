@@ -73,3 +73,8 @@ kubectl get nodes
 ```
 
 ![](./img/3-kubectl-get-nodes.png)
+
+8. 실습 자료 다운로드
+```
+git clone https://github.com/wsjang619/k8s_oneday_advance
+```

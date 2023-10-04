@@ -2,6 +2,10 @@
 
 ### Namespace 리소스를 제한
 #
+실습 디렉토리 이동
+```
+cd ~/k8s_oneday_advance/lab3/yaml
+```
 
 1. yaml 확인
 ```
