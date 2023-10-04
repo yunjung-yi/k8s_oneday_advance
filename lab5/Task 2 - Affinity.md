@@ -63,3 +63,8 @@ kubectl create -f Affinity-dp-pod.yaml
 ```
 kubectl get pod -o wide
 ```
+
+12. 리소스 삭제 
+```
+kubectl delete pod,deploy --all
+```

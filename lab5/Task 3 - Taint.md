@@ -3,42 +3,122 @@
 ### Taint 설정으로 Pod 할당 제어
 #
 
-1. node에 Label 셋팅
+1. Deployment 생성 yaml 확인 
 ```
-kubectl label nodes k8s-worker1 color=blue
-kubectl label nodes k8s-worker2 color=red
-```
-label 확인
-```
-kubectl get nodes --show-labels
+cat taint-pod-dp.yaml
 ```
 
-2. hard Affinity 설정을 사용하는 Deployment yaml 확인 
+2. 생성
 ```
-cat Affinity-dp-hard.yaml
-```
-
-3. 생성
-```
-kubectl create -f Affinity-dp-hard.yaml
+kubectl create -f taint-pod-dp.yaml
 ```
 
-4. Pod의 배치 확인
+3. Deployment 에서 생성된 Pod의 배치 확인
 ```
 kubectl get pod -o wide
 ```
 
-5. soft Affinity 설정을 사용하는 Deployment yaml 확인 
+4. Deployment 삭제
 ```
-cat Affinity-dp-soft.yaml
-```
-
-6. 생성
-```
-kubectl create -f Affinity-dp-soft.yaml
+kubectl delete deploy --all
 ```
 
-7. Pod의 배치 확인
+5. Worker 노드에 Taint 설정
+```
+kubectl taint nodes k8s-worker1 status=unstable:PreferNoSchedule
+```
+
+6. Worker 노드에 Taint 확인
+```
+kubectl describe node k8s-worker1 | grep Taint
+```
+
+7. 위에서 생성했던 Deployment를 다시 생성
+```
+kubectl create -f taint-pod-dp.yaml
+```
+
+8. Deployment 에서 생성된 Pod의 배치 확인
 ```
 kubectl get pod -o wide
+```
+
+9. 다시 삭제
+```
+kubectl delete deploy --all
+```
+
+10. Taint 삭제
+```
+kubectl taint nodes k8s-worker1 status-
+```
+
+11. Worker 노드에 Taint 삭제 확인
+```
+kubectl describe node k8s-worker1 | grep Taint
+```
+
+12. 새로운 Taint 설정
+```
+kubectl taint nodes k8s-worker1 operation=upgrading:NoSchedule
+```
+
+13. Worker 노드에 Taint 확인
+```
+kubectl describe node k8s-worker1 | grep Taint
+```
+
+14. 위에서 생성했던 Deployment를 다시 생성
+```
+kubectl create -f taint-pod-dp.yaml
+```
+
+15. Deployment 에서 생성된 Pod의 배치 확인
+```
+kubectl get pod -o wide
+```
+
+16. 다시 삭제
+```
+kubectl delete deploy --all
+```
+
+17. Taint 삭제
+```
+kubectl taint nodes k8s-worker1 operation-
+```
+
+18. 위에서 생성했던 Deployment를 다시 생성
+```
+kubectl create -f taint-pod-dp.yaml
+```
+
+19. Deployment 에서 생성된 Pod의 배치 확인
+```
+kubectl get pod -o wide
+```
+
+20. Worker 노드에 Taint 설정
+```
+kubectl taint nodes k8s-worker1 performance=slow-disk:NoExecute
+```
+
+21. Worker 노드에 있던 Pod 가 이동 되는지 확인
+```
+kubectl get pod -o wide -w
+```
+
+22. Worker 노드에 설정한 Taint 삭제
+```
+kubectl taint nodes worker performance-
+```
+
+23. 다시 원상 복구 되는지 확인 (이동안함)
+```
+kubectl get pod -o wide
+```
+
+24. 리소스 삭제
+```
+kubectl delete deployment taint-deployment
 ```
