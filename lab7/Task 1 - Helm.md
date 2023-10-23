@@ -33,6 +33,11 @@ helm search hub wordpress
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 ```
 
+7. Helm repo 업데이트
+```
+helm repo update
+```
+
 7. Helm 챠트 tgz 파일 생성
 ```
 helm fetch stable/kubernetes-dashboard
@@ -48,53 +53,14 @@ tar -xzvf <압축파일명>
 cd kubernetes-dashboard/template
 ```
 
-10. 아래내용으로 serviceaccount-custom.yaml 추가
+10. dashboard-set.yaml 확인
 ```
-vi serviceaccount-custom.yaml
+cat dashboard-set.yaml
 ```
+
+11. 생성
 ```
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: admin-user
-  namespace: kubernetes-dashboard
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: admin-user
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-  - kind: ServiceAccount
-    name: admin-user
-    namespace: kubernetes-dashboard
----
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: kubernetes-dashboard-anonymous
-rules:
-- apiGroups: [""]
-  resources: ["services/proxy"]  resourceNames: ["https:kubernetes-dashboard:https"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - nonResourceURLs: ["/ui", "/ui/*", "/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:https/proxy/*"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: kubernetes-dashboard-anonymous
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: kubernetes-dashboard-anonymous
-subjects:
-- kind: User
-  name: system:anonymous
-  namespace: kubernetes-dashboard
+kubectl create -f dashboard-set.yaml
 ```
 
 11. value.yaml 파일의 상위경로에서 helm install 실행
