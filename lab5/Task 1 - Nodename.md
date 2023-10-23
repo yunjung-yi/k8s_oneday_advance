@@ -25,7 +25,7 @@ kubectl get pod -o wide
 
 5. 생성된 Replicaset 를 Scale Out
 ```
-kubectl scale rs/nodename-rs --replicaset=5
+kubectl scale rs/nodename-rs --replicas=5
 ```
 
 6. 새롭게 생성된 Pod의 할당 확인 

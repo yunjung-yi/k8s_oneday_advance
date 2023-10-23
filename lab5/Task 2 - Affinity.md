@@ -46,7 +46,7 @@ kubectl get pod -o wide
 8. Inter Pod Affinity 를 구현하기 위한 Pod 확인 및 배포
 ```
 cat pod-affinity-pod.yaml
-kubectl create pod-affinity-pod.yaml
+kubectl create -f pod-affinity-pod.yaml
 ```
 
 9. Inter Pod Affinity 설정을 사용하는 Deployment yaml 확인 

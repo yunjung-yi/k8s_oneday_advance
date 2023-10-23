@@ -110,7 +110,7 @@ kubectl get pod -o wide -w
 
 22. Worker 노드에 설정한 Taint 삭제
 ```
-kubectl taint nodes worker performance-
+kubectl taint nodes k8s-worker1 performance-
 ```
 
 23. 다시 원상 복구 되는지 확인 (이동안함)
