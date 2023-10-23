@@ -32,76 +32,41 @@ helm search hub wordpress
 ```
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 ```
-
-7. svc 노드포트로 변경 (type: NodePort)
+7. helm 으로 k8s 대시보드 설치
+```
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+```
+8. svc 노드포트로 변경 (type: NodePort)
 ```
 kubectl edit -n kubernetes-dashboard svc kubernetes-dashboard
 ```
 
-8. 
-
----
-
-7. stable repo 설치
+9. ClusterRoleBinding, ServiceAccount, Secret 확인 및 배포
 ```
-helm repo add stable https://charts.helm.sh/stable
-```
-
-7. Helm repo 업데이트
-```
-helm repo update
+cat kd-crb.yaml kd-sa.yaml kd-sa-secret.yaml
+kubectl create -f kd-crb.yaml 
+kubectl create -f kd-sa.yaml 
+kubectl create -f kd-sa-secret
 ```
 
-7. Helm 챠트 tgz 파일 생성
+10. secret의 token을 확인하여 메모장에 저장
 ```
-helm fetch stable/kubernetes-dashboard
+kubectl describe secrets -n kubernetes-dashboard 
 ```
-
-8. 압축해제
-```
-tar -xzvf <압축파일명>
-```
-
-10. 디렉토리 이동
-```
-cd kubernetes-dashboard
-```
-
-k8s-dashboard ns생성
-
-helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -n kubernetes-dashboard
-
-cd ..
-
-
-11. 생성
-```
-kubectl create -f dashboard-set.yaml
-```
-
-11. value.yaml 파일의 상위경로에서 helm install 실행
-```
-helm install -n kubernetes-dashboard kubernetes-dashboard
-```
-
-12. 외부에서 접근가능한 URL 조회
-```
-kubectl cluster-info -n kubernetes-dashboard
-```
-
-13. 워커노드의 Public ip 조회 
+11. worker node 1이나 2에서 Public IP확인
 ```
 curl ifconfig.io
 ```
 
-14. 웹브라우저에서 아래 주소로 접속
+12. master node에서 대시보드 svc의 노드포트 넘버 확인
 ```
-<12에서 확인한 URL에서 IP 부분을 13에서확인된 IP로 수정하여 접속>
-```
-
-15. 로그인하기 위한 토큰 확인
-```
-kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}”
+kubectl get svc -A
 ```
 
-16. 확인되는 토큰으로 접속
+13. 웹브라우저로 접속
+```
+https://<WorkerNodePublic IP>:<NodePortNumber>
+```
+# 크롬 기준 : 하단 고급 버튼-> 안전하지않음으로 이동
+
+14. 메모장에 저장한 토큰으로 로그인
