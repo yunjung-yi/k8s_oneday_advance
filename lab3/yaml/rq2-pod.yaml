@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
   - name: container
-    image: ubuntu
+    image: nginx
     resources:
       requests:
         memory: 0.5Gi

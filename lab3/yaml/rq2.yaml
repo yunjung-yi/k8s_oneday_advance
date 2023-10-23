@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: rq2
-  namespace: ns1
+  namespace: rq-ns
 spec:
   hard:
     pods: 2
