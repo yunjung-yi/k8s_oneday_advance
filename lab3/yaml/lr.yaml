@@ -7,12 +7,12 @@ spec:
   limits:
   - type: Container
     min:
-      memory: 0.1Gi
+      memory: 0.1G
     max:
-      memory: 0.4Gi
+      memory: 0.4G
     maxLimitRequestRatio:
       memory: 3
     defaultRequest:
-      memory: 0.1Gi
+      memory: 0.1G
     default:
-      memory: 0.2Gi
+      memory: 0.2G

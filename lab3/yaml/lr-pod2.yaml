@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: lr-pod
+  name: lr-pod2
   namespace: lr-ns
 spec:
   containers:
@@ -11,4 +11,4 @@ spec:
       requests:
         memory: 0.1G
       limits:
-        memory: 0.5G
+        memory: 0.2G

@@ -36,9 +36,22 @@ kubectl create -f lr-pod.yaml
 ```
 `lr 제한에 위배되어 생성되지 않음을 확인`
 
-
-7. clear
+7. 두번째 Pod yaml 확인 
 ```
-kubectl delete ns rq-ns
+cat lr-pod2.yaml
+```
+
+8. pod 생성
+```
+kubectl create -f lr-pod2.yaml
+```
+
+9. LimitRange 확인
+```
+kubectl describe limitrange -n lr-ns
+```
+
+10. ns 삭제
+```
 kubectl delete ns lr-ns
 ```
