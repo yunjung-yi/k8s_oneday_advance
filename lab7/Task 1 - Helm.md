@@ -33,6 +33,20 @@ helm search hub wordpress
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 ```
 
+7. svc 노드포트로 변경 (type: NodePort)
+```
+kubectl edit -n kubernetes-dashboard svc kubernetes-dashboard
+```
+
+8. 
+
+---
+
+7. stable repo 설치
+```
+helm repo add stable https://charts.helm.sh/stable
+```
+
 7. Helm repo 업데이트
 ```
 helm repo update
@@ -48,15 +62,17 @@ helm fetch stable/kubernetes-dashboard
 tar -xzvf <압축파일명>
 ```
 
-9. 익명 사용자를 위한 API 생성
+10. 디렉토리 이동
 ```
-cd kubernetes-dashboard/template
+cd kubernetes-dashboard
 ```
 
-10. dashboard-set.yaml 확인
-```
-cat dashboard-set.yaml
-```
+k8s-dashboard ns생성
+
+helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -n kubernetes-dashboard
+
+cd ..
+
 
 11. 생성
 ```
@@ -65,7 +81,7 @@ kubectl create -f dashboard-set.yaml
 
 11. value.yaml 파일의 상위경로에서 helm install 실행
 ```
-helm install -n kubernetes-dashboard kubernetes-dashboard kubernetes-dashboard
+helm install -n kubernetes-dashboard kubernetes-dashboard
 ```
 
 12. 외부에서 접근가능한 URL 조회
