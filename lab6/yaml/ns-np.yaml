@@ -12,7 +12,7 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ns4          
+          name: np-ns          
     ports:
       - protocol: TCP
         port: 80

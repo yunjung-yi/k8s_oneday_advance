@@ -90,28 +90,60 @@ cat ns-np.yaml
 kubectl create -f ns-np.yaml
 ```
 
-18. ns와 Pod를 생성하는 yaml 확인
+18. ns 생성하는 yaml 확인
 ```
-cat pod4.yaml
+cat np-ns.yaml
 ```
 
 19. 생성
 ```
-kubectl create -f pod4.yaml
+kubectl create -f np-ns.yaml
 ```
 
-20. ns4 에 있는 pod4 에 접속
+20. np-ns 에 pod 생성
 ```
-kubectl -n ns4 exec -it pod4 -- /bin/bash
+kubectl run np-ns-pod --image=nginx -n np-ns
 ```
 
-21. curl 명령을 이용하여 접근 시도
+21. np-ns 에 있는 np-ns-pod 에 접속
+```
+kubectl -n np-ns exec -it np-ns-pod -- /bin/bash
+```
+
+22. curl 명령을 이용하여 접근 시도
 ```
 curl <6에서 확인한 Pod1의 ip>:80
 ```
+접근이 잘되는 것을 확인.
+
+23. np-ns-pod 에서 접속해제 후 pod2, pod3에서 접근시도
+
+```
+exit
+```
+
+```
+kubectl exec -it pod2 -- /bin/bash
+curl <6에서 확인한 Pod1의 ip>:80
+```
+<Ctrl + C>키로 취소
+```
+exit
+```
+```
+kubectl exec -it pod3 -- /bin/bash
+curl <6에서 확인한 Pod1의 ip>:80
+```
+<Ctrl + C>키로 취소
+```
+exit
+```
+
+접근이 안되는 것을 확인
 
 
 22. 리소스삭제 
 ```
 kubectl delete networkpolicy,pod --all
+kubectl delete ns np-ns
 ```
