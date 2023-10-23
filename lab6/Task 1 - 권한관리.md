@@ -101,3 +101,8 @@ kubectl config get-contexts
 ```
 kubectl config use-context kubernetes-admin@kubernetes
 ```
+
+17. 리소스 삭제
+```
+kubectl delete role,rolebinding,secret,sa,deploy --all
+```
