@@ -67,6 +67,6 @@ kubectl get svc -A
 ```
 https://<WorkerNodePublic IP>:<NodePortNumber>
 ```
-### 크롬 기준 : 하단 고급 버튼-> 안전하지않음으로 이동
+크롬 기준 : 하단 고급 버튼-> 안전하지않음으로 이동
 
 14. 메모장에 저장한 토큰으로 로그인
