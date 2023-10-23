@@ -11,6 +11,7 @@ cd ~/k8s_oneday_advance/lab2/yaml
 2. Daemonset 조회
 ```
 kubectl get daemonset
+kubectl get ds
 ```  
 
 3. yaml 확인
@@ -53,7 +54,7 @@ kubectl create -f daemonset2.yaml
 
 10. 생성된 리소스 확인
 ```
-kubectl get daemonset
+kubectl get ds
 kubectl get pod
 ```
 
@@ -69,7 +70,12 @@ kubectl label nodes k8s-worker1 os-
 kubectl label nodes k8s-worker2 os-
 ```
 
+13. Daemonset과 pod확인
+```
+kubectl get ds,pod
+```
+
 13. clear
 ```
-kubectl delete daemonset --all
+kubectl delete ds --all
 ```
