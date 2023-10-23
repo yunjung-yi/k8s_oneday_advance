@@ -1,6 +1,6 @@
 # Task 1 - Helm
 
-### Helm 을 이용하여 패키지 설치
+### Helm 을 이용하여 kubernetes 대시보드 패키지 설치
 #
 
 1. 실습 디렉토리 이동
