@@ -1,4 +1,4 @@
-# Task 2 - ResourseQuota
+# Task 1 - ResourseQuota
 
 ### Namespace 리소스를 제한
 #

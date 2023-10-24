@@ -1,4 +1,4 @@
-# Task 3 - LimitRange
+# Task 2 - LimitRange
 
 ### 개별 Pod 리소스 제한
 #
