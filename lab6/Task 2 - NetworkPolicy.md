@@ -10,7 +10,7 @@ kubectl delete -f https://raw.githubusercontent.com/wsjang619/k8s_course/master/
 
 2. calico network 플러그인 설치 yaml 다운로드
 ```
-wget https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/cailco.yaml
+wget https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
 ```
 3. calico 설치
 ```
