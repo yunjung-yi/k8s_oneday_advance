@@ -46,7 +46,7 @@ kubectl edit -n kubernetes-dashboard svc kubernetes-dashboard
 cat kd-crb.yaml kd-sa.yaml kd-sa-secret.yaml
 kubectl create -f kd-crb.yaml 
 kubectl create -f kd-sa.yaml 
-kubectl create -f kd-sa-secret
+kubectl create -f kd-sa-secret.yaml
 ```
 
 10. secret의 token을 확인하여 메모장에 저장
