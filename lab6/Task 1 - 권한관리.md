@@ -83,12 +83,6 @@ kubectl create -f role-sa-secret.yaml
 ```
 ```yaml
 apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: role-sa
-  namespace: default
-root@k8s-master:~/k8s_oneday_advance/lab6/yaml# cat role-sa-secret.yaml
-apiVersion: v1
 kind: Secret
 metadata:
   name: role-sa-secret
