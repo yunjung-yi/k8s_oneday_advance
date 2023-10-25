@@ -43,6 +43,47 @@ kubectl edit -n kubernetes-dashboard svc kubernetes-dashboard
 
 9. ClusterRoleBinding, ServiceAccount, Secret 확인 및 배포
 ```
+cat kd-crb.yaml
+```
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+```
+```
+cat kd-sa.yaml
+```
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+```
+```
+cat kd-sa-secret.yaml
+```
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kd-sa-secret
+  namespace: kubernetes-dashboard
+  annotations:
+    kubernetes.io/service-account.name: admin-user
+type: kubernetes.io/service-account-token
+```
+
+```
 cat kd-crb.yaml kd-sa.yaml kd-sa-secret.yaml
 kubectl create -f kd-crb.yaml 
 kubectl create -f kd-sa.yaml 
