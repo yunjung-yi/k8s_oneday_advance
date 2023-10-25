@@ -10,7 +10,48 @@ cd ~/k8s_oneday_advance/lab4/yaml
 
 2. yaml 확인
 ```
-cat statefulset.yaml replicaset.yaml
+cat statefulset.yaml
+```
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: db
+  serviceName: "db"
+  template:
+    metadata:
+      labels:
+        type: db
+    spec:
+      containers:
+      - name: container
+        image: nginx
+```
+```
+cat  replicaset.yaml
+```
+```yaml
+kind: ReplicaSet
+metadata:
+  name: rs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: web
+  template:
+    metadata:
+      labels:
+        type: web
+    spec:
+      containers:
+      - name: container
+        image: nginx
 ```
 
 3. 각 리소스 생성
