@@ -26,10 +26,50 @@ kubectl get pod -A
 ```
 cat somepod-np.yaml
 ```
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: somepod-np
+spec:
+  podSelector:
+    matchLabels:
+      app: pod1
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: pod2
+    ports:
+    - protocol: TCP
+      port: 80
+```
 
 6. pod yaml 확인
 ```
 cat pod1.yaml
+```
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: somepod-np
+spec:
+  podSelector:
+    matchLabels:
+      app: pod1
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: pod2
+    ports:
+    - protocol: TCP
+      port: 80
 ```
 
 7. 생성
@@ -84,6 +124,26 @@ exit
 ```
 cat ns-np.yaml
 ```
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ns-np
+spec:
+  podSelector:
+    matchLabels:
+      app: pod1
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: np-ns          
+    ports:
+      - protocol: TCP
+        port: 80
+```
 
 17. 생성 
 ```
@@ -98,6 +158,14 @@ cat np-ns.yaml
 19. 생성
 ```
 kubectl create -f np-ns.yaml
+```
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: np-ns
+  labels:
+    name: np-ns
 ```
 
 20. np-ns 에 pod 생성
