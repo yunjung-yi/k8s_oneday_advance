@@ -11,6 +11,27 @@ cd ~/k8s_oneday_advance/lab6/yaml
 ```
 cat role-dm.yaml
 ```
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: role-dm
+  labels:
+    app: role-dm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: role-dm
+  template:
+    metadata:
+      labels:
+        app: role-dm
+    spec:
+      containers:
+        - name: role-dm
+          image: nginx
+```
 
 2. 위 yaml 파일로 리소스 생성
 ```
@@ -21,6 +42,17 @@ kubectl create -f role-dm.yaml
 
 ```
 cat role.yaml
+```
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: role
+  namespace: default
+rules:
+- apiGroups: [""]
+  verbs: ["get", "list"]
+  resources: ["pods"]
 ```
 
 4. 위 yaml 파일로 리소스 생성
@@ -33,6 +65,13 @@ kubectl create -f role.yaml
 ```
 cat role-sa.yaml
 ```
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: role-sa
+  namespace: default
+```
 
 6. 위 yaml 파일로 리소스 생성
 ```
@@ -41,6 +80,21 @@ kubectl create -f role-sa.yaml
 role-sa 의 secret 생성
 ```
 kubectl create -f role-sa-secret.yaml
+```
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: role-sa
+  namespace: default
+root@k8s-master:~/k8s_oneday_advance/lab6/yaml# cat role-sa-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: role-sa-secret
+  annotations:
+    kubernetes.io/service-account.name: role-sa
+type: kubernetes.io/service-account-token
 ```
 
 7. role-sa 의 toekn 을 확인
@@ -75,6 +129,21 @@ cat role-rb.yaml
 12. 위 yaml파일로 리소스 생성
 ```
 kubectl create -f role-rb.yaml
+```
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: default
+  name: role-rb
+subjects:
+- kind: ServiceAccount
+  name: role-sa
+  apiGroup: ""
+roleRef:
+  kind: Role
+  name: role
+  apiGroup: rbac.authorization.k8s.io
 ```
 
 13. context를 변환
